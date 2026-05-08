@@ -1,0 +1,16 @@
+# Sensitive Information
+.env
+.env.example
+
+# Python environment & cache
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+
+# Environment / IDE
+.DS_Store
+.vscode/
+.idea/
+.windsurf/

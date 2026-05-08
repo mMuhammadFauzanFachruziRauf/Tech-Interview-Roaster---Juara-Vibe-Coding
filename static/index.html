@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Tech Interview Roaster</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23FF3B30' d='M37 2 10 36h19l-3 26 28-38H35z'/%3E%3C/svg%3E">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card-bg: #111111;
+            --border: #222222;
+            --primary-red: #FF3B30;
+            --text-primary: #FFFFFF;
+            --text-secondary: #888888;
+            --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --orange: #ff9f0a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 14% 0%, rgba(255, 59, 48, 0.1), transparent 28rem),
+                linear-gradient(180deg, #101010 0%, var(--bg) 24rem);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 32px 18px;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 860px;
+            min-height: calc(100vh - 64px);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 28px;
+        }
+
+        .header {
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .brand-mark {
+            font-size: clamp(42px, 8vw, 68px);
+            line-height: 1;
+            filter: drop-shadow(0 0 18px rgba(255, 59, 48, 0.35));
+        }
+
+        h1 {
+            font-size: clamp(36px, 7vw, 62px);
+            line-height: 1;
+            font-weight: 850;
+            letter-spacing: 0;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: clamp(15px, 2.4vw, 18px);
+            margin-bottom: 14px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 5px 12px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.035);
+            color: #b8b8b8;
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        .red-line {
+            height: 2px;
+            width: min(440px, 78%);
+            margin: 24px auto 0;
+            background: linear-gradient(90deg, transparent, var(--primary-red), #ff6b5f, transparent);
+            box-shadow: 0 0 22px rgba(255, 59, 48, 0.42);
+        }
+
+        .panel {
+            background: rgba(17, 17, 17, 0.94);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+        }
+
+        .form-card,
+        .result-card {
+            padding: clamp(22px, 4vw, 34px);
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 750;
+            letter-spacing: 0;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            border: 1px solid #2d2d2d;
+            border-radius: 10px;
+            background: #0d0d0d;
+            color: var(--text-primary);
+            font-size: 16px;
+            padding: 13px 14px;
+            outline: none;
+            transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+        }
+
+        .field textarea {
+            min-height: 240px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--primary-red);
+            background: #101010;
+            box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.14);
+        }
+
+        .field textarea::placeholder,
+        .field input::placeholder {
+            color: #5f5f5f;
+        }
+
+        .upload-section {
+            margin-bottom: 16px;
+        }
+
+        .upload-label {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .upload-optional {
+            color: #444;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 4px;
+        }
+
+        .drop-zone {
+            border: 2px dashed #2a2a2a;
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drop-zone:hover, .drop-zone.drag-over {
+            border-color: #FF3B30;
+            background: #1a0a0a;
+        }
+
+        .dz-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            pointer-events: none;
+        }
+
+        .dz-icon { font-size: 28px; margin-bottom: 4px; }
+
+        .dz-text {
+            font-size: 14px;
+            color: #aaa;
+            font-weight: 500;
+        }
+
+        .dz-subtext { font-size: 12px; color: #555; }
+
+        .dz-formats {
+            font-size: 11px;
+            color: #333;
+            margin-top: 4px;
+        }
+
+        .img-preview-container {
+            width: 100%;
+            position: relative;
+        }
+
+        .img-preview-container.hidden { display: none; }
+
+        .img-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 6px;
+            display: block;
+        }
+
+        .img-preview-overlay {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding: 0 4px;
+        }
+
+        .img-preview-name {
+            font-size: 12px;
+            color: #666;
+            max-width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .remove-img-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: #666;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .remove-img-btn:hover {
+            color: #FF3B30;
+            border-color: #FF3B30;
+        }
+
+        .vision-badge {
+            display: inline-block;
+            background: #0a1a0a;
+            border: 1px solid #34C759;
+            color: #34C759;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 8px;
+        }
+
+        .upload-error {
+            font-size: 12px;
+            color: #FF9500;
+            margin-top: 6px;
+            padding: 6px 10px;
+            background: #1a1000;
+            border-radius: 6px;
+            border: 1px solid #FF950040;
+        }
+
+        .upload-error.hidden { display: none; }
+
+        .submit-btn {
+            width: 100%;
+            min-height: 56px;
+            margin-top: 6px;
+            border: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-red), #d91f16);
+            color: var(--text-primary);
+            font-weight: 850;
+            font-size: 17px;
+            box-shadow: 0 14px 30px rgba(255, 59, 48, 0.22);
+            transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.01);
+            filter: brightness(1.08);
+            box-shadow: 0 18px 38px rgba(255, 59, 48, 0.28);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.995);
+        }
+
+        .loading-card,
+        .error-card {
+            padding: clamp(28px, 5vw, 42px);
+            text-align: center;
+        }
+
+        .pulse {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            background: var(--primary-red);
+            box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.62);
+            animation: pulseCircle 1.35s infinite;
+        }
+
+        @keyframes pulseCircle {
+            0% {
+                transform: scale(0.94);
+                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.62);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 24px rgba(255, 59, 48, 0);
+            }
+            100% {
+                transform: scale(0.94);
+                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+            }
+        }
+
+        .loading-title,
+        .error-title {
+            font-size: clamp(21px, 4vw, 28px);
+            font-weight: 850;
+            margin-bottom: 6px;
+        }
+
+        .loading-subtext,
+        .error-message {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .result-heading {
+            border-left: 5px solid var(--primary-red);
+            padding-left: 14px;
+            margin-bottom: 22px;
+            font-size: clamp(22px, 4vw, 30px);
+            font-weight: 850;
+            line-height: 1.2;
+        }
+
+        .questions {
+            display: grid;
+            gap: 12px;
+        }
+
+        .question-card {
+            display: grid;
+            grid-template-columns: 38px 1fr;
+            gap: 14px;
+            align-items: start;
+            padding: 17px 0;
+            border-bottom: 1px solid var(--border);
+            transition: transform 160ms ease, background 160ms ease, padding 160ms ease;
+        }
+
+        .question-card:hover {
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.025);
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 12px;
+        }
+
+        .question-card:last-child {
+            border-bottom: 0;
+        }
+
+        .question-number {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-red);
+            color: var(--text-primary);
+            font-weight: 850;
+            box-shadow: 0 8px 18px rgba(255, 59, 48, 0.2);
+        }
+
+        .question-text {
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.65;
+        }
+
+        .question-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+
+        .verdict {
+            margin-top: 24px;
+            padding: 22px;
+            border: 1px solid rgba(255, 59, 48, 0.35);
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255, 59, 48, 0.16), #1f0807);
+        }
+
+        .verdict-title {
+            color: #ffd0cc;
+            font-weight: 850;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .score {
+            color: var(--primary-red);
+            font-size: clamp(38px, 8vw, 58px);
+            line-height: 1;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .verdict-text {
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .defense-section {
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .defense-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .shield-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .defense-header h3 {
+            margin: 0 0 4px 0;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        .defense-header p {
+            margin: 0;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .question-selector label {
+            display: block;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 14px;
+            border: 1px solid #222;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .radio-option:hover {
+            border-color: #FF3B30;
+            background: #1a0a0a;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-top: 2px;
+            accent-color: #FF3B30;
+            flex-shrink: 0;
+        }
+
+        .radio-option.selected {
+            border-color: #FF3B30;
+            background: #1a0a0a;
+        }
+
+        .radio-option-text {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.4;
+        }
+
+        .defense-input-area label {
+            display: block;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        #defense-textarea {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+            padding: 12px;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.5;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        #defense-textarea:focus {
+            outline: none;
+            border-color: #FF3B30;
+        }
+
+        .defend-button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 14px;
+            background: linear-gradient(135deg, #8B0000, #FF3B30);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .defend-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .defend-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .defense-result {
+            background: #0f0f0f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .defense-result.hidden { display: none; }
+
+        .defense-result-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .defense-evaluation, .defense-counter {
+            background: #141414;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .eval-label, .counter-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .eval-text, .counter-text {
+            font-size: 14px;
+            color: #d0d0d0;
+            line-height: 1.6;
+        }
+
+        .defense-score-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .score-label {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .score-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .score-badge.lemah {
+            background: #2d0a0a;
+            color: #FF3B30;
+            border: 1px solid #FF3B30;
+        }
+
+        .score-badge.cukup {
+            background: #2d1a0a;
+            color: #FF9500;
+            border: 1px solid #FF9500;
+        }
+
+        .score-badge.solid {
+            background: #0a2d0a;
+            color: #34C759;
+            border: 1px solid #34C759;
+        }
+
+        .defend-again-btn {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #888;
+            font-size: 13px;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .defend-again-btn:hover {
+            border-color: #555;
+            color: #ccc;
+        }
+
+        .roadmap-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .roadmap-result {
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .roadmap-title {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .roadmap-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .roadmap-item {
+            background: #141414;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 16px;
+            position: relative;
+        }
+
+        .roadmap-item-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .roadmap-priority {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .roadmap-priority.high {
+            background: #2d0a0a;
+            color: #FF3B30;
+            border: 1px solid #FF3B30;
+        }
+
+        .roadmap-priority.medium {
+            background: #2d1a0a;
+            color: #FF9500;
+            border: 1px solid #FF9500;
+        }
+
+        .roadmap-priority.low {
+            background: #0a2d0a;
+            color: #34C759;
+            border: 1px solid #34C759;
+        }
+
+        .roadmap-step {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .roadmap-description {
+            color: #b0b0b0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        #roadmap-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .share-btn {
+            padding: 12px 20px;
+            background: #0077B5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            flex: 1;
+        }
+
+        .share-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .share-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .share-modal.hidden { display: none; }
+
+        .share-modal-content {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .share-modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .share-modal-subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .share-text-preview {
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 13px;
+            color: #bbb;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .share-modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .copy-share-btn {
+            flex: 1;
+            padding: 12px;
+            background: #0077B5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .close-share-btn {
+            padding: 12px 20px;
+            background: transparent;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .outline-btn {
+            flex: 1 1 180px;
+            min-height: 46px;
+            border: 1px solid #383838;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text-primary);
+            font-weight: 750;
+            transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+        }
+
+        .outline-btn:hover {
+            border-color: var(--primary-red);
+            background: rgba(255, 59, 48, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .error-card {
+            border-color: var(--orange);
+            background: #160f05;
+        }
+
+        .error-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .error-card .outline-btn {
+            max-width: 220px;
+            margin-top: 20px;
+            border-color: rgba(255, 159, 10, 0.48);
+        }
+
+        .footer {
+            color: #696969;
+            text-align: center;
+            font-size: 13px;
+            padding-bottom: 4px;
+        }
+
+        .history-panel {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .clear-history-btn {
+            background: none;
+            border: none;
+            color: #444;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: color 0.2s;
+        }
+
+        .clear-history-btn:hover { color: #FF3B30; }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item {
+            background: #0d0d0d;
+            border: 1px solid #1e1e1e;
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .history-item:hover {
+            border-color: #333;
+            background: #141414;
+        }
+
+        .history-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .history-role {
+            font-size: 13px;
+            font-weight: 600;
+            color: #ccc;
+        }
+
+        .history-time {
+            font-size: 11px;
+            color: #444;
+        }
+
+        .history-verdict {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 620px) {
+            body {
+                padding: 22px 14px;
+            }
+
+            .page {
+                min-height: calc(100vh - 44px);
+                gap: 22px;
+            }
+
+            .brand {
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .question-card {
+                grid-template-columns: 32px 1fr;
+                gap: 11px;
+            }
+
+            .question-number {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="header">
+            <div class="brand">
+                <span class="brand-mark" aria-hidden="true">⚡</span>
+                <h1>Tech Interview Roaster</h1>
+            </div>
+            <p class="subtitle">Uji sistem arsitekturmu sebelum interview yang sesungguhnya</p>
+            <span class="badge">Powered by Gemini 2.5 Flash</span>
+            <div class="red-line" aria-hidden="true"></div>
+        </header>
+
+        <div id="history-panel"
+             style="display:none"
+             class="history-panel">
+            <div class="history-header">
+                <span>🕐 Sesi Terakhir</span>
+                <button onclick="clearSessions()"
+                        class="clear-history-btn">
+                    Hapus Riwayat
+                </button>
+            </div>
+            <div id="history-list" class="history-list"></div>
+        </div>
+
+        <section class="panel form-card" id="formState">
+            <form id="roastForm" novalidate>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="role">Role yang Dilamar</label>
+                        <input type="text" id="role" name="role" placeholder="Backend Engineer, Data Engineer, DevOps Engineer" autocomplete="off" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="seniority">Level Senioritas</label>
+                        <select id="seniority" name="seniority" required>
+                            <option value="Junior" selected>Junior</option>
+                            <option value="Mid-Level">Mid-Level</option>
+                            <option value="Senior">Senior</option>
+                            <option value="Staff Engineer">Staff Engineer</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="persona-select">Persona Interviewer</label>
+                        <select id="persona-select" name="persona" required>
+                            <option value="google_sre" selected>Google SRE (Fokus SLA & Reliability)</option>
+                            <option value="netflix_architect">Netflix Architect (Fokus Skalabilitas Ekstrem)</option>
+                            <option value="startup_cto">Startup CTO (Fokus Budget & Pragmatisme)</option>
+                            <option value="psycho">Psycho Mode (Skeptis, Brutal, Tanpa Ampun)</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="project">Deskripsi Proyek</label>
+                        <textarea id="project" name="project" rows="10" placeholder="Contoh: Saya membangun sistem e-commerce dengan microservices menggunakan Node.js, MySQL sebagai database utama, Redis untuk caching, dan Nginx sebagai load balancer..." required></textarea>
+                    </div>
+
+                    <div class="upload-section">
+                        <div class="upload-label">
+                            📐 Diagram Arsitektur
+                            <span class="upload-optional">(Opsional)</span>
+                        </div>
+                        <div id="drop-zone" class="drop-zone">
+                            <div id="drop-zone-content" class="dz-content">
+                                <div class="dz-icon">🖼️</div>
+                                <div class="dz-text">
+                                    Drag & drop diagram arsitekturmu di sini
+                                </div>
+                                <div class="dz-subtext">
+                                    atau klik untuk pilih file
+                                </div>
+                                <div class="dz-formats">
+                                    PNG · JPG · WEBP · maks 5MB
+                                </div>
+                            </div>
+                            <div id="image-preview-container"
+                                 class="img-preview-container hidden">
+                                <img id="image-preview"
+                                     class="img-preview"
+                                     alt="Preview diagram">
+                                <div class="img-preview-overlay">
+                                    <span class="img-preview-name"
+                                          id="img-filename"></span>
+                                    <button type="button"
+                                            id="remove-image-btn"
+                                            class="remove-img-btn">
+                                        ✕ Hapus
+                                    </button>
+                                </div>
+                                <div class="vision-badge">
+                                    👁️ Gemini Vision aktif
+                                </div>
+                            </div>
+                            <input type="file"
+                                   id="image-input"
+                                   accept="image/png,image/jpeg,image/webp"
+                                   style="display:none">
+                        </div>
+                        <div id="upload-error"
+                             class="upload-error hidden"></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">🔥 Roast My Architecture</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel loading-card" id="loadingState" hidden>
+            <div class="pulse" aria-hidden="true"></div>
+            <h2 class="loading-title" id="loading-message">⚡ Membaca setiap baris arsitekturmu...</h2>
+            <p class="loading-subtext">Tech Lead sedang membaca setiap baris desainmu</p>
+        </section>
+
+        <section class="panel result-card" id="resultState" hidden>
+            <h2 class="result-heading">💀 Interogasi dari Tech Lead</h2>
+            <div class="questions" id="questionsList"></div>
+
+            <section class="verdict" aria-labelledby="verdictTitle">
+                <div class="verdict-title" id="verdictTitle">⚖️ VERDICT</div>
+                <div class="score" id="scoreText">0/100</div>
+                <p class="verdict-text" id="verdictText"></p>
+            </section>
+
+            <div id="roadmap-action-container" style="text-align: center; margin: 20px 0;">
+    <button id="roadmap-btn" style="background: linear-gradient(135deg, #0077B5 0%, #005E93 100%); color: white; border: none; padding: 15px 30px; font-size:16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);">
+        💡 Minta Solusi Perbaikan Arsitektur
+    </button>
+</div>
+<div id="roadmap-result" class="roadmap-result hidden"></div>
+
+            <div id="defense-section" class="defense-section">
+                <div class="defense-header">
+                    <span class="shield-icon">🛡️</span>
+                    <div>
+                        <h3>Mode Defensi</h3>
+                        <p>Pilih satu pertanyaan dan buktikan bahwa arsitekturmu tidak selemah yang dikira.</p>
+                    </div>
+                </div>
+
+                <div class="question-selector">
+                    <label>Pilih pertanyaan yang ingin kamu bela:</label>
+                    <div id="question-radio-group" class="radio-group"></div>
+                </div>
+
+                <div class="defense-input-area">
+                    <label for="defense-textarea">Argumen Defensimu:</label>
+                    <textarea
+                        id="defense-textarea"
+                        placeholder="Jelaskan bagaimana kamu mengatasi masalah tersebut. Contoh: Saya akan menggunakan read replicas untuk MySQL, pisahkan write/read traffic dengan ProxySQL, dan implementasi circuit breaker di API layer menggunakan Resilience4j..."
+                        rows="5"
+                    ></textarea>
+                    <button id="defend-btn" class="defend-button" type="button">
+                        ⚔️ Kirim Argumen Defensi
+                    </button>
+                </div>
+            </div>
+
+            <div id="defense-result" class="defense-result hidden">
+                <div class="defense-result-header">
+                    <span>⚔️</span>
+                    <h3>Respons Tech Lead</h3>
+                </div>
+
+                <div class="defense-evaluation">
+                    <div class="eval-label">📋 EVALUASI</div>
+                    <div id="eval-text" class="eval-text"></div>
+                </div>
+
+                <div class="defense-counter">
+                    <div class="counter-label">🎯 SERANGAN BALIK</div>
+                    <div id="counter-text" class="counter-text"></div>
+                </div>
+
+                <div class="defense-score-row">
+                    <span class="score-label">Skor Defensi:</span>
+                    <span id="defense-score-badge" class="score-badge"></span>
+                </div>
+
+                <button id="defend-again-btn" class="defend-again-btn" type="button">
+                    🔄 Coba Pertanyaan Lain
+                </button>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="outline-btn" id="resetBtn">🔁 Roast Lagi</button>
+                <button type="button" class="outline-btn" id="copyBtn">📋 Copy Hasil</button>
+                <button id="share-linkedin-btn" class="share-btn" type="button">
+                    🔗 Share ke LinkedIn
+                </button>
+            </div>
+        </section>
+
+        <section class="panel error-card" id="errorState" hidden>
+            <div class="error-icon" aria-hidden="true">⚠️</div>
+            <h2 class="error-title">Roast gagal dikirim</h2>
+            <p class="error-message" id="errorMessage">Coba lagi beberapa saat lagi.</p>
+            <button type="button" class="outline-btn" id="tryAgainBtn">Coba Lagi</button>
+        </section>
+
+        <footer class="footer">Built for #JuaraVibeCoding · Google for Developers 2026</footer>
+    </main>
+
+    <script>
+        const formState = document.getElementById('formState');
+        const loadingState = document.getElementById('loadingState');
+        const resultState = document.getElementById('resultState');
+        const errorState = document.getElementById('errorState');
+        const form = document.getElementById('roastForm');
+        const roleInput = document.getElementById('role');
+        const seniorityInput = document.getElementById('seniority');
+        const personaSelect = document.getElementById('persona-select');
+        const projectInput = document.getElementById('project');
+        const questionsList = document.getElementById('questionsList');
+        const scoreText = document.getElementById('scoreText');
+        const verdictText = document.getElementById('verdictText');
+        const errorMessage = document.getElementById('errorMessage');
+        const resetBtn = document.getElementById('resetBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const tryAgainBtn = document.getElementById('tryAgainBtn');
+        const roadmapSection = document.getElementById('roadmap-section');
+        const roadmapBtn = document.getElementById('roadmap-btn');
+        const roadmapResult = document.getElementById('roadmap-result');
+        const roadmapContent = document.getElementById('roadmap-content');
+
+        const loadingMessages = [
+            "⚡ Membaca setiap baris arsitekturmu...",
+            "🔍 Mencari single point of failure...",
+            "💀 Menyiapkan pertanyaan paling mematikan...",
+            "⚠️ Menganalisis bottleneck tersembunyi..."
+        ];
+
+        let msgIndex = 0;
+        let loadingInterval;
+        let latestResultText = '';
+        let copyTimer = null;
+        let currentRole = '';
+        let currentSeniority = '';
+        let currentContext = '';
+        let currentQuestions = [];
+        let selectedQuestionIndex = 0;
+        let uploadedImageBase64 = '';
+        let uploadedImageMime = '';
+
+        function showUploadError(msg) {
+            const el = document.getElementById('upload-error');
+            el.textContent = msg;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 4000);
+        }
+
+        function setImagePreview(file) {
+            if (!file) return;
+
+            const allowedTypes = [
+                'image/png', 'image/jpeg', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                showUploadError(
+                    'Format tidak didukung. Gunakan PNG, JPG, atau WEBP.');
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                showUploadError(
+                    'File terlalu besar. Maksimal 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const result = e.target.result;
+                // result = "data:image/png;base64,XXXX..."
+                const parts = result.split(',');
+                uploadedImageBase64 = parts[1];
+                uploadedImageMime = file.type;
+
+                document.getElementById('image-preview')
+                    .src = result;
+                document.getElementById('img-filename')
+                    .textContent = file.name;
+                document.getElementById('drop-zone-content')
+                    .style.display = 'none';
+                document.getElementById('image-preview-container')
+                    .classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearImage() {
+            uploadedImageBase64 = '';
+            uploadedImageMime = '';
+            document.getElementById('image-input').value = '';
+            document.getElementById('image-preview').src = '';
+            document.getElementById('drop-zone-content')
+                .style.display = '';
+            document.getElementById('image-preview-container')
+                .classList.add('hidden');
+        }
+
+        // Drop zone events
+        const dropZone = document.getElementById('drop-zone');
+        const imageInput = document.getElementById('image-input');
+
+        dropZone.addEventListener('click', (e) => {
+            if (e.target.id === 'remove-image-btn') return;
+            imageInput.click();
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) setImagePreview(e.target.files[0]);
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file) setImagePreview(file);
+        });
+
+        document.getElementById('remove-image-btn')
+            .addEventListener('click', (e) => {
+                e.stopPropagation();
+                clearImage();
+            });
+
+        function startLoadingMessages() {
+            const el = document.getElementById('loading-message');
+            if (!el) return;
+            msgIndex = 0;
+            el.textContent = loadingMessages[0];
+            loadingInterval = setInterval(() => {
+                msgIndex = (msgIndex + 1) % loadingMessages.length;
+                el.textContent = loadingMessages[msgIndex];
+            }, 2000);
+        }
+
+        function stopLoadingMessages() {
+            clearInterval(loadingInterval);
+        }
+
+        function showState(stateName) {
+            formState.hidden = stateName !== 'form';
+            loadingState.hidden = stateName !== 'loading';
+            resultState.hidden = stateName !== 'result';
+            errorState.hidden = stateName !== 'error';
+
+            if (stateName === 'loading') {
+                startLoadingMessages();
+            } else {
+                stopLoadingMessages();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function escapeHtml(raw) {
+            return String(raw || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderText(raw) {
+            if (!raw) return '';
+            const escaped = escapeHtml(raw);
+            return escaped
+                // Bold: **text** or __text__
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/__(.+?)__/g, '<strong>$1</strong>')
+                // Italic/emphasis: *text* (single asterisk)
+                .replace(/\*([^*\n]+?)\*/g,
+                    '<span style="color:#e0e0e0;font-style:italic">$1</span>')
+                // Inline code: `text`
+                .replace(/`([^`]+)`/g,
+                    '<code style="background:#1a1a1a;padding:2px 6px;' +
+                    'border-radius:4px;font-family:monospace;color:#FF6B6B">$1</code>')
+                // Line breaks
+                .replace(/\n/g, '<br>');
+        }
+
+        function parseQuestions(questionsText) {
+            // Split on numbered patterns: "1.", "2.", etc at line start
+            const parts = String(questionsText || '').trim().split(/\n(?=\d+\.)/);
+            return parts
+                .map(q => q.replace(/^\d+\.\s*/, '').trim())
+                .filter(q => q.length > 10);
+        }
+
+        function detectQuestionCategory(questionText) {
+            const q = questionText.toLowerCase();
+
+            if (q.includes('scale') || q.includes('scaling') ||
+                q.includes('traffic') || q.includes('bottleneck') ||
+                q.includes('throughput') || q.includes('horizontal') ||
+                q.includes('skalabilitas') || q.includes('beban')) {
+                return {
+                    label: 'Scalability',
+                    color: '#FF9500',
+                    bg: '#2d1a00'
+                };
+            }
+            if (q.includes('security') || q.includes('injection') ||
+                q.includes('auth') || q.includes('enkripsi') ||
+                q.includes('xss') || q.includes('keamanan') ||
+                q.includes('privilege') || q.includes('secret')) {
+                return {
+                    label: 'Security',
+                    color: '#FF3B30',
+                    bg: '#2d0000'
+                };
+            }
+            if (q.includes('failure') || q.includes('crash') ||
+                q.includes('recovery') || q.includes('backup') ||
+                q.includes('uptime') || q.includes('failover') ||
+                q.includes('rto') || q.includes('rpo') ||
+                q.includes('kegagalan') || q.includes('pulih')) {
+                return {
+                    label: 'Reliability',
+                    color: '#FF6B6B',
+                    bg: '#2d1010'
+                };
+            }
+            if (q.includes('cost') || q.includes('biaya') ||
+                q.includes('efisien') || q.includes('optimal') ||
+                q.includes('resource') || q.includes('memory') ||
+                q.includes('cpu') || q.includes('latency')) {
+                return {
+                    label: 'Performance',
+                    color: '#34C759',
+                    bg: '#002d10'
+                };
+            }
+            if (q.includes('maintain') || q.includes('monitor') ||
+                q.includes('debug') || q.includes('deploy') ||
+                q.includes('observ') || q.includes('log') ||
+                q.includes('konsisten') || q.includes('dokumen')) {
+                return {
+                    label: 'Maintainability',
+                    color: '#5AC8FA',
+                    bg: '#00152d'
+                };
+            }
+            return {
+                label: 'Architecture',
+                color: '#BF5AF2',
+                bg: '#1a002d'
+            };
+        }
+
+        function populateQuestionRadioGroup() {
+            const radioGroup = document.getElementById('question-radio-group');
+            radioGroup.innerHTML = '';
+            selectedQuestionIndex = 0;
+
+            currentQuestions.forEach((q, i) => {
+                const label = document.createElement('label');
+                label.className = 'radio-option' + (i === 0 ? ' selected' : '');
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'q-select';
+                radio.value = String(i);
+                radio.checked = i === 0;
+
+                const text = document.createElement('span');
+                text.className = 'radio-option-text';
+                text.innerHTML = `<strong>Pertanyaan ${i + 1}:</strong> `;
+                text.append(document.createTextNode(`${q.substring(0, 80)}...`));
+
+                label.append(radio, text);
+                label.addEventListener('change', () => {
+                    document.querySelectorAll('.radio-option')
+                        .forEach(el => el.classList.remove('selected'));
+                    label.classList.add('selected');
+                    selectedQuestionIndex = i;
+                });
+                radio.addEventListener('change', () => {
+                    selectedQuestionIndex = i;
+                });
+                radioGroup.appendChild(label);
+            });
+
+            document.getElementById('defense-textarea').value = '';
+            document.getElementById('defense-result').classList.add('hidden');
+        }
+
+        function renderResult(data) {
+            const questionsListData = parseQuestions(data.questions);
+            currentQuestions = questionsListData;
+
+            // Clear existing question cards
+            questionsList.innerHTML = '';
+
+            // Create one card per question
+            questionsListData.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                const category = detectQuestionCategory(q);
+                card.innerHTML = `
+                    <div class="question-number">${index + 1}</div>
+                    <div class="question-content">
+                        <span class="category-badge"
+                              style="background:${category.bg};
+                                     color:${category.color};
+                                     border:1px solid ${category.color}40">
+                            ${category.label}
+                        </span>
+                        <div class="question-text">
+                            ${renderText(q)}
+                        </div>
+                    </div>
+                `;
+                questionsList.appendChild(card);
+            });
+
+            const scoreMatch = data.verdict.match(/(\d+)\/100/);
+            const score = scoreMatch ? scoreMatch[1] : '?';
+            const displayedVerdictText = data.verdict
+                .replace(/\d+\/100\s*[—\-–]\s*/, '')
+                .trim();
+
+            // Set score display
+            scoreText.textContent = score + '/100';
+
+            // Set verdict text with markdown rendering
+            verdictText.innerHTML = renderText(displayedVerdictText);
+
+            // Color the score based on value
+            const scoreNum = parseInt(score);
+            if (scoreNum >= 70) {
+                scoreText.style.color = '#34C759'; // green
+            } else if (scoreNum >= 40) {
+                scoreText.style.color = '#FF9500'; // orange
+            } else {
+                scoreText.style.color = '#FF3B30'; // red
+            }
+
+            latestResultText = [
+                questionsListData.map((question, index) => `${index + 1}. ${question}`).join('\n\n'),
+                '---',
+                `VERDICT: ${score}/100 — ${displayedVerdictText}`
+            ].join('\n');
+
+            populateQuestionRadioGroup();
+            
+            // Show roadmap button after verdict
+            const roadmapActionContainer = document.getElementById('roadmap-action-container');
+            const roadmapResultDiv = document.getElementById('roadmap-result');
+            if (roadmapActionContainer) roadmapActionContainer.classList.remove('hidden');
+            if (roadmapResultDiv) roadmapResultDiv.classList.add('hidden');
+        }
+
+        function displayResult(questions, verdict) {
+            renderResult({ questions, verdict });
+            showState('result');
+        }
+
+        function setError(message) {
+            errorMessage.textContent = message || 'Gagal menghubungi AI. Coba lagi.';
+            showState('error');
+        }
+
+        async function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+                return;
+            }
+
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            textarea.remove();
+        }
+
+        const STORAGE_KEY = 'tir_sessions';
+        const MAX_SESSIONS = 3;
+
+        function saveSession(role, seniority, context, questions, verdict) {
+            const sessions = loadSessions();
+            const newSession = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleString('id-ID'),
+                role,
+                seniority,
+                context: context.substring(0, 100) + '...',
+                questions,
+                verdict
+            };
+            sessions.unshift(newSession);
+            if (sessions.length > MAX_SESSIONS) {
+                sessions.splice(MAX_SESSIONS);
+            }
+            try {
+                localStorage.setItem(STORAGE_KEY,
+                    JSON.stringify(sessions));
+                renderHistoryPanel();
+            } catch(e) {
+                console.warn('LocalStorage unavailable:', e);
+            }
+        }
+
+        function loadSessions() {
+            try {
+                return JSON.parse(
+                    localStorage.getItem(STORAGE_KEY) || '[]');
+            } catch(e) { return []; }
+        }
+
+        function clearSessions() {
+            localStorage.removeItem(STORAGE_KEY);
+            renderHistoryPanel();
+        }
+
+        function renderHistoryPanel() {
+            const sessions = loadSessions();
+            const panel = document.getElementById('history-panel');
+            const list = document.getElementById('history-list');
+            if (!panel || !list) return;
+
+            if (sessions.length === 0) {
+                panel.style.display = 'none';
+                return;
+            }
+
+            panel.style.display = 'block';
+            list.innerHTML = sessions.map((s, i) => `
+                <div class="history-item"
+                     onclick="restoreSession(${i})"
+                     title="Klik untuk lihat lagi">
+                    <div class="history-item-header">
+                        <span class="history-role">
+                            ${escapeHtml(s.role)} · ${escapeHtml(s.seniority)}
+                        </span>
+                        <span class="history-time">
+                            ${escapeHtml(s.timestamp)}
+                        </span>
+                    </div>
+                    <div class="history-verdict">
+                        ${escapeHtml((s.verdict || '').substring(0, 60))}...
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function restoreSession(index) {
+            const sessions = loadSessions();
+            const s = sessions[index];
+            if (!s) return;
+
+            currentRole = s.role;
+            currentSeniority = s.seniority;
+            currentContext = s.context;
+
+            displayResult(s.questions, s.verdict);
+        }
+
+        function generateLinkedInPost(role, seniority, verdict, questions) {
+            const score = verdict.match(/(\d+)\/100/);
+            const scoreNum = score ? score[1] : '?';
+
+            return `Baru saja stress-test arsitektur sistem saya menggunakan Tech Interview Roaster — dan hasilnya cukup brutal! 💀
+
+🎯 Role: ${role} (${seniority})
+📊 Architecture Score: ${scoreNum}/100
+
+Beberapa pertanyaan yang langsung menghantam titik lemah sistem saya:
+
+❓ ${questions[0] ? questions[0].substring(0, 80) + '...' : ''}
+❓ ${questions[1] ? questions[1].substring(0, 80) + '...' : ''}
+
+Kalau kamu mau tau seberapa siap arsitektur sistemmu untuk interview, coba sendiri di sini 👇
+[link Cloud Run kamu nanti]
+
+Powered by Gemini 2.5 Flash 🤖
+
+#JuaraVibeCoding #GoogleforDevelopers #SystemDesign #TechInterview #SoftwareEngineering #Indonesia`;
+        }
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const role = roleInput.value.trim();
+            const seniority = seniorityInput.value.trim();
+            const project = projectInput.value.trim();
+            const persona = personaSelect.value;
+
+            if (!role || !seniority || !project) {
+                setError('Semua field wajib diisi sebelum Tech Lead mulai membantai desainmu.');
+                return;
+            }
+
+            showState('loading');
+
+            try {
+                const response = await fetch('/roast', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        role: role,
+                        seniority: seniority,
+                        project_description: project,
+                        persona: persona,
+                        image_base64: uploadedImageBase64,
+                        image_mime_type: uploadedImageMime || 'image/png'
+                    })
+                });
+
+                const payload = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    throw new Error(payload.detail || 'Gagal menghubungi AI. Coba lagi.');
+                }
+
+                currentRole = role;
+                currentSeniority = seniority;
+                currentContext = project;
+                renderResult(payload);
+                saveSession(role, seniority, project, payload.questions, payload.verdict);
+                showState('result');
+            } catch (error) {
+                setError(error.message);
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            form.reset();
+            seniorityInput.value = 'Junior';
+            clearImage();
+            latestResultText = '';
+            showState('form');
+            roleInput.focus();
+        });
+
+        tryAgainBtn.addEventListener('click', () => {
+            showState('form');
+            roleInput.focus();
+        });
+
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await copyToClipboard(latestResultText);
+                copyBtn.textContent = '✓ Copied!';
+                clearTimeout(copyTimer);
+                copyTimer = setTimeout(() => {
+                    copyBtn.textContent = '📋 Copy Hasil';
+                }, 2000);
+            } catch (error) {
+                copyBtn.textContent = 'Copy gagal';
+                clearTimeout(copyTimer);
+                copyTimer = setTimeout(() => {
+                    copyBtn.textContent = '📋 Copy Hasil';
+                }, 2000);
+            }
+        });
+
+        document.getElementById('defend-btn').addEventListener('click', async () => {
+            const defenseText = document.getElementById('defense-textarea').value.trim();
+
+            if (!defenseText) {
+                alert('Tulis argumen defensimu terlebih dahulu!');
+                return;
+            }
+
+            const btn = document.getElementById('defend-btn');
+            btn.disabled = true;
+            btn.textContent = '⚡ Tech Lead sedang mengevaluasi...';
+
+            try {
+                const selectedQuestion = currentQuestions[selectedQuestionIndex];
+                if (!selectedQuestion) {
+                    throw new Error('Pertanyaan belum tersedia. Silakan roast ulang.');
+                }
+
+                const resp = await fetch('/defend', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        role: currentRole,
+                        seniority: currentSeniority,
+                        original_context: currentContext,
+                        selected_question: selectedQuestion,
+                        defense_argument: defenseText
+                    })
+                });
+
+                const data = await resp.json().catch(() => ({}));
+                if (!resp.ok) {
+                    throw new Error(data.detail || 'Sistem sedang sibuk, silakan coba beberapa saat lagi.');
+                }
+
+                document.getElementById('eval-text').innerHTML =
+                    renderText(data.evaluation);
+                document.getElementById('counter-text').innerHTML =
+                    renderText(data.counter_attack);
+
+                const badge = document.getElementById('defense-score-badge');
+                const scoreText = data.defense_score.toLowerCase();
+                badge.className = 'score-badge';
+
+                if (scoreText.startsWith('solid') ||
+                    scoreText.includes('solid')) {
+                    badge.classList.add('solid');
+                } else if (scoreText.startsWith('cukup') ||
+                           scoreText.includes('cukup')) {
+                    badge.classList.add('cukup');
+                } else {
+                    badge.classList.add('lemah');
+                }
+
+                // Display full score text
+                badge.textContent = data.defense_score;
+
+                const defenseResult = document.getElementById('defense-result');
+                if (defenseResult) {
+                    defenseResult.classList.remove('hidden');
+                    defenseResult.scrollIntoView({behavior: 'smooth'});
+                }
+            } catch (err) {
+                alert('Gagal mengirim defensi. Coba lagi.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '⚔️ Kirim Argumen Defensi';
+            }
+        });
+
+        document.getElementById('defend-again-btn').addEventListener('click', () => {
+            document.getElementById('defense-textarea').value = '';
+            const defenseResult = document.getElementById('defense-result');
+            if (defenseResult) defenseResult.classList.add('hidden');
+            const firstRadio = document.querySelector('input[name="q-select"]');
+            if (firstRadio) firstRadio.checked = true;
+            document.querySelectorAll('.radio-option')
+                .forEach((el, i) => {
+                    el.classList.toggle('selected', i === 0);
+                });
+            selectedQuestionIndex = 0;
+            const defenseSection = document.getElementById('defense-section');
+            if (defenseSection) defenseSection.scrollIntoView({behavior: 'smooth'});
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderHistoryPanel();
+
+            document.getElementById('share-linkedin-btn')
+                .addEventListener('click', () => {
+                    const postText = generateLinkedInPost(
+                        currentRole,
+                        currentSeniority,
+                        `${scoreText.textContent} — ${verdictText.textContent}`,
+                        currentQuestions
+                    );
+
+                    document.getElementById('share-text-preview')
+                        .textContent = postText;
+                    document.getElementById('share-modal')
+                        .classList.remove('hidden');
+                });
+
+            document.getElementById('copy-share-btn')
+                .addEventListener('click', async () => {
+                    const text = document.getElementById(
+                        'share-text-preview').textContent;
+                    try {
+                        await copyToClipboard(text);
+                        const btn = document.getElementById(
+                            'copy-share-btn');
+                        btn.textContent = '✅ Ter-copy! Buka LinkedIn...';
+                        setTimeout(() => {
+                            window.open('https://www.linkedin.com/feed/',
+                                '_blank');
+                            document.getElementById('share-modal')
+                                .classList.add('hidden');
+                            btn.textContent = '📋 Copy & Buka LinkedIn';
+                        }, 1000);
+                    } catch(e) {
+                        alert('Copy manual: ' + text);
+                    }
+                });
+
+            // Close modal on backdrop click
+            document.getElementById('share-modal')
+                .addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.add('hidden');
+                    }
+                });
+        });
+
+        // Roadmap functionality
+        roadmapBtn.addEventListener('click', async () => {
+            const btn = roadmapBtn;
+            btn.disabled = true;
+            btn.textContent = '🤖 Mentor sedang menganalisis...';
+
+            try {
+                const roastResults = latestResultText || `${currentQuestions.join('\n\n')}\n\n---\nVERDICT: ${scoreText.textContent} — ${verdictText.textContent}`;
+                
+                const response = await fetch('/roadmap', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        role: currentRole,
+                        seniority: currentSeniority,
+                        original_context: currentContext,
+                        roast_results: roastResults
+                    })
+                });
+
+                const data = await response.json().catch(() => ({}));
+                console.log("DEBUG: Roadmap Data Received:", data);
+                if (!response.ok) {
+                    throw new Error(data.detail || 'Sistem sedang sibuk, silakan coba beberapa saat lagi.');
+                }
+
+                // Parse and render roadmap
+                let roadmapData;
+                try {
+                    roadmapData = data; // Use direct response, not nested
+                } catch (e) {
+                    throw new Error('Format data tidak sesuai dengan ekspektasi frontend.');
+                }
+
+                renderRoadmap(roadmapData);
+                document.getElementById('roadmap-action-container').classList.add('hidden');
+                roadmapResult.classList.remove('hidden');
+                roadmapResult.scrollIntoView({behavior: 'smooth'});
+                
+            } catch (error) {
+                // Show error in roadmap container instead of alert
+                document.getElementById('roadmap-action-container').classList.add('hidden');
+                roadmapResult.classList.remove('hidden');
+                
+                const errorMessage = error.message || 'Format data tidak sesuai dengan ekspektasi frontend.';
+                roadmapResult.innerHTML = `
+                    <div style="border: 1px solid #ff4444; padding: 20px; border-radius: 8px; background: rgba(255, 68, 68, 0.1);">
+                        <h4 style="color: #ff4444; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 12px; padding: 2px 8px; border: 1px solid #ff4444; border-radius: 12px;">ERROR</span>
+                            Gagal Memuat Roadmap
+                        </h4>
+                        <p style="color: #e0e0e0; margin-bottom: 0;">${escapeHtml(errorMessage)}</p>
+                    </div>
+                `;
+                roadmapResult.scrollIntoView({behavior: 'smooth'});
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '💡 Minta Solusi Perbaikan';
+            }
+        });
+
+        function renderRoadmap(data) {
+            const roadmapResult = document.getElementById('roadmap-result');
+            if (!roadmapResult) {
+                console.error("CRITICAL ERROR: Container 'roadmap-result' not found in DOM.");
+                return;
+            }
+
+            // Use data.steps as seen in console log
+            const steps = data.steps || [];
+            let html = '<h3 style="margin-bottom: 15px;">🛣️ Improvement Roadmap</h3>';
+            
+            steps.forEach((step, index) => {
+                const priorityClass = `priority-${step.priority.toLowerCase()}`;
+                html += `
+                    <div class="roadmap-card">
+                        <div class="roadmap-header">
+                            <span class="priority-badge ${priorityClass}">${step.priority}</span>
+                            <span class="step-number">Langkah ${index + 1}</span>
+                        </div>
+                        <h4>${escapeHtml(step.title)}</h4>
+                        <p>${escapeHtml(step.description)}</p>
+                    </div>
+                `;
+            });
+
+            roadmapResult.innerHTML = html;
+            roadmapResult.classList.remove('hidden');
+        }
+
+        showState('form');
+    </script>
+
+    <div id="share-modal" class="share-modal hidden">
+        <div class="share-modal-content">
+            <div class="share-modal-title">
+                🔗 Share ke LinkedIn
+            </div>
+            <div class="share-modal-subtitle">
+                Teks ini sudah siap di-paste ke LinkedIn.
+                Klik "Copy & Buka LinkedIn" lalu paste!
+            </div>
+            <div id="share-text-preview"
+                 class="share-text-preview"></div>
+            <div class="share-modal-actions">
+                <button class="copy-share-btn"
+                        id="copy-share-btn">
+                    📋 Copy & Buka LinkedIn
+                </button>
+                <button class="close-share-btn"
+                        onclick="document.getElementById('share-modal').classList.add('hidden')">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
