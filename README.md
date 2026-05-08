@@ -270,24 +270,9 @@ git rm uvicorn.err.log uvicorn.out.log
 git commit -m "chore: remove unnecessary log files"
 git push origin main
 ```
-
----
-
-## Tambahkan Screenshot
-
-README tanpa visual = engagement rendah.
-
-Minimal tambahkan:
-- landing page,
-- upload architecture flow,
-- hasil roasting AI.
-
-Karena orang menilai project dalam <10 detik.
-
 ---
 
 # 📄 License
 
 MIT License
-
 ---
